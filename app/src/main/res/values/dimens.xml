@@ -10,7 +10,7 @@
 
     <!-- VIDEO TRIMMER-->
     <dimen name="progress_video_line_height">2dp</dimen>
-    <dimen name="frames_video_height">40dip</dimen>
+    <dimen name="frames_video_height">56dp</dimen>
     <dimen name="trimmer_thumbs_topmargin">10dp</dimen>
     <dimen name="trimmer_thumbs_width">32dp</dimen>
     <dimen name="trimmer_thumbs_height">56dp</dimen>

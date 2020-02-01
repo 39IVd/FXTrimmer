@@ -33,7 +33,6 @@ class ProgressBarView @JvmOverloads constructor(
     }
 
     private fun init() {
-//        val lineProgress = ContextCompat.getColor(context, R.color.line_color)
         val lineBackground = ContextCompat.getColor(context, R.color.watermelon)
 
         mProgressHeight =
@@ -45,7 +44,6 @@ class ProgressBarView @JvmOverloads constructor(
         mBackgroundColor.style = Paint.Style.STROKE
 
         mProgressColor.isAntiAlias = true
-//        mProgressColor.color = lineProgress
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -69,18 +67,11 @@ class ProgressBarView @JvmOverloads constructor(
         super.onDraw(canvas)
 
         drawLineBackground(canvas)
-//        drawLineProgress(canvas)
     }
 
     private fun drawLineBackground(@NonNull canvas: Canvas) {
         if (mBackgroundRect != null) {
             canvas.drawRect(mBackgroundRect!!, mBackgroundColor)
-        }
-    }
-
-    private fun drawLineProgress(@NonNull canvas: Canvas) {
-        if (mProgressRect != null) {
-            canvas.drawRect(mProgressRect!!, mProgressColor)
         }
     }
 

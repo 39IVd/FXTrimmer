@@ -1,0 +1,45 @@
+<resources>
+    <string-array name="video_arr_1">
+        <item>MKV</item><item>MP4</item><item>3GP</item><item>FLV</item>
+        <item>WMV</item><item>AVI</item><item>VOB</item><item>MPG</item><item>MOV</item>
+        <item>ASF</item><item>M2TS</item><item>MTS</item><item>TS</item>
+    </string-array>
+    <string-array name="video_arr_2">
+        <item>H264</item><item>H265</item><item>MPEG4</item><item>MPEG2</item><item>MPEG1</item>
+    </string-array>
+    <string-array name="video_arr_3">
+        <item>24</item><item>23.98</item><item>25</item><item>29.97</item><item>30</item>
+        <item>50</item><item>60</item><item>72</item><item>120</item>
+    </string-array>
+    <string-array name="video_arr_4">
+        <item>Auto</item><item>144p</item><item>240p</item><item>320p</item><item>360p</item>
+        <item>480p</item><item>640p</item><item>720p</item><item>960p</item>
+    </string-array>
+    <string-array name="video_arr_5">
+        <item>Auto</item><item>32kb/s</item><item>64kb/s</item><item>128kb/s</item><item>192kb/s</item>
+        <item>256kb/s</item><item>320kb/s</item><item>130kb/s</item><item>190kb/s</item><item>245kb/s</item>
+    </string-array>
+
+    <string-array name="audio_arr_1">
+        <item>MP3</item><item>M4A</item><item>MP4</item><item>WAV</item><item>WMA</item><item>MKA</item>
+        <item>ASF</item>
+    </string-array>
+    <string-array name="audio_arr_2">
+        <item>MP3/LAIM</item><item>AAC</item>
+    </string-array>
+    <string-array name="audio_arr_3">
+        <item>Auto</item><item>32kb/s</item><item>64kb/s</item><item>128kb/s</item><item>192kb/s</item>
+        <item>256kb/s</item><item>320kb/s</item><item>130kb/s</item><item>190kb/s</item><item>245kb/s</item>
+    </string-array>
+    <string-array name="audio_arr_4">
+        <item>Auto</item><item>8000Hz</item><item>16000Hz</item><item>22050Hz</item><item>48000Hz</item>
+    </string-array>
+    <string-array name="audio_arr_5">
+        <item>Auto</item><item>Stereo</item><item>Mono</item>
+    </string-array>
+    <string-array name="audio_arr_6">
+        <item>10%</item><item>20%</item><item>30%</item><item>40%</item><item>50%</item><item>60%</item><item>70%</item>
+        <item>80%</item><item>90%</item><item>100%</item><item>110%</item>
+    </string-array>
+
+</resources>

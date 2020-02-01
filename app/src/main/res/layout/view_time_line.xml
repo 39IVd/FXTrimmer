@@ -1,176 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-    android:background="@color/dark_grey">
-
-    <RelativeLayout
-        android:id="@+id/layout_surface_view"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:background="@android:color/black"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <VideoView
-            android:id="@+id/video_loader"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"/>
-
-        <ImageView
-            android:id="@+id/icon_video_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/ic_white_play"/>
-
-    </RelativeLayout>
-
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/dark_grey" >
     <FrameLayout
-        android:id="@+id/layout"
-        android:layout_below="@id/layout_surface_view"
-        android:layout_marginTop="20dp"
-        android:background="@color/dark_grey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.fx.fxtrimmer.view.TimeLineView
-            android:id="@+id/timeLineView"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="58dp"  />
-        <com.fx.fxtrimmer.view.ProgressBarView
-            android:id="@+id/timeVideoView_top"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_height="wrap_content" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:id="@+id/layout_surface_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    >
 
-        <com.fx.fxtrimmer.view.ProgressBarView
-            android:id="@+id/timeVideoView"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
-            android:layout_marginTop="50dp"/>
-        <View
-            android:layout_width="1.7dp"
-            android:layout_height="60dp"
-            android:background="@color/white"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="5dp"/>
-        <com.fx.fxtrimmer.view.RangeSeekBarView
-            android:id="@+id/timeLineBar"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:layout_marginEnd="15dp" />
+                    <VideoView
+                        android:id="@+id/video_loader"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true" />
+                    <ImageView
+                        android:id="@+id/icon_video_play"
+                        android:layout_width="26dp"
+                        android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/ic_white_play"
+                        />
 
-        <SeekBar
-            android:id="@+id/handlerTop"
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp">
+
+                    <RelativeLayout
+                        android:id="@+id/layout_convert_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        >
+
+                        <ImageView
+                            android:id="@+id/img_convert_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_convert_whole"
+                            android:backgroundTint="@color/dull_teal"/>
+
+                        <TextView
+                            android:id="@+id/text_convert_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@id/img_convert_left"
+                            android:text="전체 변환"
+                            android:textColor="@color/dull_teal"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_convert_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/layout_convert_left"
+                        android:gravity="center_vertical"
+                        >
+
+                        <ImageView
+                            android:id="@+id/img_convert_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/text_convert_right"
+                            android:background="@drawable/ic_convert_section"/>
+
+                        <TextView
+                            android:id="@+id/text_convert_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:text="구간선택  변환"
+                            android:textColor="#80ffffff"
+                            android:textSize="10sp" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_trim"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp" >
+                    <include layout="@layout/layout_trimmer"
+                        android:id="@+id/layout_trimmer">
+                    </include>
+
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/black_two"
+                    tools:visibility="visible"></View>
+                <RelativeLayout
+                    android:id="@+id/layout_convert"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp">
+                    <RadioGroup android:id="@+id/radioGroup"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp">
+                        <RadioButton
+                            android:id="@+id/radio_default"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:button="@drawable/radiobtn_selected"
+                            android:fontFamily="sans-serif"
+                            android:textColor="#80ffffff"
+                            android:textSize="13sp"
+                            android:textStyle="normal"
+                            android:text="  Default"
+                            />
+                        <RadioButton
+                            android:id="@+id/radio_video_only"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:button="@drawable/radiobtn_unselected"
+                            android:fontFamily="sans-serif"
+                            android:textColor="#80ffffff"
+                            android:textSize="13sp"
+                            android:textStyle="normal"
+                            android:text="  Video only"
+                            />
+                        <RadioButton
+                            android:id="@+id/radio_audio_only"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:button="@drawable/radiobtn_unselected"
+                            android:fontFamily="sans-serif"
+                            android:textColor="#80ffffff"
+                            android:textSize="13sp"
+                            android:textStyle="normal"
+                            android:text="  Audio only"
+                            />
+                    </RadioGroup>
+                </RelativeLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <include layout="@layout/layout_spinner"
+                        android:id="@+id/layout_spinner" />
+                </FrameLayout>
+
+            </LinearLayout>
+        </ScrollView>
+        <RelativeLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="10dp"
-            android:max="1000"
-            android:progressDrawable="@android:color/transparent"
-            android:secondaryProgress="0"
-            android:thumb="@drawable/ic_seekbar_icon"
-            android:layout_marginTop="60dp"/>
+            android:background="@color/transparent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp">
+                <ImageButton
+                    android:id="@+id/btn_video_under"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_menu_under"
+                    android:scaleType="fitCenter"
+                    android:layout_marginTop="4dp"></ImageButton>
+                <TextView
+                    android:id="@+id/text_video_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#def3f3f3"
+                    android:textSize="16dp"
+                    android:textStyle="normal"
+                    android:text="Frozen2.2019.720p.900..." />
+                <ImageButton
+                    android:id="@+id/btn_video_infobtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_info"
+                    android:layout_gravity="center"
+                    android:layout_alignParentRight="true">
+                </ImageButton>
+            </RelativeLayout>
+        </RelativeLayout>
 
     </FrameLayout>
 
-    <!--    <RelativeLayout-->
-<!--        android:id="@+id/layout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="100dp"-->
-<!--        android:layout_below="@id/layout_surface_view"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:background="@color/dark_grey">-->
-
-<!--        <com.fx.fxtrimmer.view.ProgressBarView-->
-<!--            android:id="@+id/timeVideoView_top"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="5dp"-->
-<!--            android:layout_marginLeft="10dp"-->
-<!--            android:layout_marginRight="10dp" />-->
-
-<!--        <com.fx.fxtrimmer.view.TimeLineView-->
-<!--            android:id="@+id/timeLineView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="54dp"  />-->
-
-<!--        <com.fx.fxtrimmer.view.RangeSeekBarView-->
-<!--            android:id="@+id/timeLineBar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="56dp"-->
-<!--            android:layout_marginEnd="15dp" />-->
-
-<!--        <com.fx.fxtrimmer.view.ProgressBarView-->
-<!--            android:id="@+id/timeVideoView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="5dp"-->
-<!--            android:layout_marginLeft="8dp"-->
-<!--            android:layout_marginRight="8dp" -->
-<!--            android:layout_below="@id/timeLineView"/>-->
-
-<!--        <SeekBar-->
-<!--            android:id="@+id/handlerTop"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/timeVideoView"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:layout_marginLeft="5dp"-->
-<!--            android:layout_marginRight="5dp"-->
-<!--            android:layout_marginBottom="10dp"-->
-<!--            android:max="1000"-->
-<!--            android:progressDrawable="@android:color/transparent"-->
-<!--            android:secondaryProgress="0"-->
-<!--            android:thumb="@drawable/ic_seekbar_icon" />-->
-
-<!--    </RelativeLayout>-->
-
-    <RelativeLayout
-        android:id="@+id/timeText"
+    <Button
+        android:id="@+id/btn_convert"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:textSize="16sp"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/layout"
-        android:background="@color/dark_grey"
-        >
-
-        <TextView
-            android:id="@+id/textTimeSelection"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:textColor="@android:color/white"
-            android:text="00:00-10:00"/>
-
-        <TextView
-            android:id="@+id/textTime"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:textColor="@android:color/white"
-            android:text="00:50"/>
-
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/timeText"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btCancel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/cancel"
-            android:textColor="@android:color/white"/>
-    </LinearLayout>
+        android:layout_height="48dp"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="normal"
+        android:textColor="#deebebeb"
+        android:lineSpacingExtra="1sp"
+        android:background="@color/dark_grey_two"
+        android:text="Convert">
+    </Button>
 
 
 </RelativeLayout>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/layout_spinner"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/layout_video_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="135dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/shape_rectangle_menu" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="29dp"
+            android:layout_marginTop="9dp"
+            android:background="@color/dark_grey"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Video Setting"
+            android:textColor="#80ffffff"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_margin="15dp"
+            android:layout_marginBottom="40dp">
+
+            <LinearLayout
+                android:id="@+id/layout_video_spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="15dp"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Spinner
+                        android:id="@+id/spinner_video_1"
+                        style="@style/CustomSpinner"></Spinner>
+
+                    <TextView
+                        style="@style/CumtomSpinner_Text"
+                        android:text="Format" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Spinner
+                        android:id="@+id/spinner_video_2"
+                        style="@style/CustomSpinner" ></Spinner>
+
+                    <TextView
+                        style="@style/CumtomSpinner_Text"
+                        android:text="Codec" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_below="@+id/layout_video_spinner1"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Spinner
+                        android:id="@+id/spinner_video_3"
+                        style="@style/CustomSpinner" ></Spinner>
+
+                    <TextView
+                        style="@style/CumtomSpinner_Text"
+                        android:text="FPS" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Spinner
+                        android:id="@+id/spinner_video_4"
+                        style="@style/CustomSpinner" ></Spinner>
+
+                    <TextView
+                        style="@style/CumtomSpinner_Text"
+                        android:text="RES" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Spinner
+                        android:id="@+id/spinner_video_5"
+                        style="@style/CustomSpinner" ></Spinner>
+
+                    <TextView
+                        style="@style/CumtomSpinner_Text"
+                        android:text="Bitrate" />
+                </FrameLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/layout_audio_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="135dp"
+            android:background="@drawable/shape_rectangle_menu"
+            android:layout_margin="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
+            android:textColor="#80ffffff"
+            android:text="Audio Setting"
+            android:layout_marginLeft="29dp"
+            android:layout_marginTop="9dp"
+            android:background="@color/dark_grey"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_margin="15dp"
+            android:layout_marginBottom="40dp">
+            <LinearLayout
+                android:id="@+id/layout_audio_spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="15dp"
+                >
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    >
+                    <Spinner
+                        android:id="@+id/spinner_audio_1"
+                        style="@style/CustomSpinner"
+                        ></Spinner>
+                    <TextView
+                        style="@style/CumtomSpinner_Text"
+                        android:text="Format"
+                        />
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    >
+                    <Spinner
+                        android:id="@+id/spinner_audio_2"
+                        style="@style/CustomSpinner"
+                        ></Spinner>
+                    <TextView
+                        style="@style/CumtomSpinner_Text"
+                        android:text="Codec"
+                        />
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    >
+                    <Spinner
+                        android:id="@+id/spinner_audio_3"
+                        style="@style/CustomSpinner"
+                        ></Spinner>
+                    <TextView
+                        style="@style/CumtomSpinner_Text"
+                        android:text="Bitrate"
+                        />
+                </FrameLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/layout_audio_spinner1"
+                android:layout_marginRight="15dp">
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    >
+                    <Spinner
+                        android:id="@+id/spinner_audio_4"
+                        style="@style/CustomSpinner"
+                        ></Spinner>
+                    <TextView
+                        style="@style/CumtomSpinner_Text"
+                        android:text="Frequency"
+                        />
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    >
+                    <Spinner
+                        android:id="@+id/spinner_audio_5"
+                        style="@style/CustomSpinner"
+                        ></Spinner>
+                    <TextView
+                        style="@style/CumtomSpinner_Text"
+                        android:text="Channels"
+                        />
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    >
+                    <Spinner
+                        android:id="@+id/spinner_audio_6"
+                        style="@style/CustomSpinner"
+                        ></Spinner>
+                    <TextView
+                        style="@style/CumtomSpinner_Text"
+                        android:text="Volume"
+                        />
+                </FrameLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

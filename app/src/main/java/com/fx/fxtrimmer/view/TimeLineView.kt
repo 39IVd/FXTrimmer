@@ -62,14 +62,12 @@ class TimeLineView @JvmOverloads constructor(
                     val mediaMetadataRetriever = MediaMetadataRetriever()
                     mediaMetadataRetriever.setDataSource(context, mVideoUri)
 
-                    // Retrieve media data
                     val videoLengthInMs = (Integer.parseInt(
                         mediaMetadataRetriever.extractMetadata(
                             MediaMetadataRetriever.METADATA_KEY_DURATION
                         )
                     ) * 1000).toLong()
 
-                    // Set thumbnail properties (Thumbs are squares)
                     val thumbWidth = mHeightView
                     val thumbHeight = mHeightView
 

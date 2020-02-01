@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import com.fx.fxtrimmer.interfaces.OnProgressVideoListener
 import com.fx.fxtrimmer.interfaces.OnRangeSeekBarListener
 import com.fx.fxtrimmer.interfaces.OnTrimVideoListener
@@ -25,6 +26,7 @@ import com.fx.fxtrimmer.view.ProgressBarView
 import com.fx.fxtrimmer.view.RangeSeekBarView
 import com.fx.fxtrimmer.view.Thumb
 import com.fx.fxtrimmer.view.TimeLineView
+import kotlinx.android.synthetic.main.layout_trimmer.view.*
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -37,18 +39,34 @@ class VideoTrimmer @JvmOverloads constructor(
     private var mHolderTopView: SeekBar? = null
     private var mRangeSeekBarView: RangeSeekBarView? = null
     private var mLinearVideo: RelativeLayout? = null
-    private var mTimeInfoContainer: View? = null
     private var mVideoView: VideoView? = null
     private var mPlayView: ImageView? = null
-    private var mTextTimeFrame: TextView? = null
-    private var mTextTime: TextView? = null
+    private var mStartTime: TextView? = null
+    private var mEndTime: TextView? = null
+    private var mCurrentTime: TextView? = null
     private var mTimeLineView: TimeLineView? = null
-
-    private var mVideoProgressIndicator: ProgressBarView? = null
+    private var seekbar_bar: View? = null
+    private var layout_convert_right: RelativeLayout? = null
+    private var layout_default_trim: RelativeLayout? = null
+    private var layout_default: LinearLayout? = null
+    private var img_convert_left: ImageView? = null
+    private var img_convert_right: ImageView? = null
+    private var text_video_name: TextView? = null
+    private var text_convert_left: TextView? = null
+    private var text_convert_right: TextView? = null
+    private var whole_convert = true
+    private var r_default: RadioButton? = null
+    private var r_video_only: RadioButton? = null
+    private var r_audio_only: RadioButton? = null
+    private var radioGroup: RadioGroup? = null
+    private var layout_video_setting: FrameLayout? = null
+    private var layout_audio_setting: FrameLayout? = null
+    private var spinner_video_list: MutableList<Spinner>? = null
+    private var spinner_audio_list: MutableList<Spinner>? = null
     private var mVideoProgressIndicator_top: ProgressBarView? = null
+    private var mVideoProgressIndicator_bottom: ProgressBarView? = null
 
     private var mSrc: Uri? = null
-//    private var mFinalPath: String? = null
 
     private var mMaxDuration: Int = 0
     private var mListeners: MutableList<OnProgressVideoListener>? = null
@@ -71,20 +89,39 @@ class VideoTrimmer @JvmOverloads constructor(
         LayoutInflater.from(context).inflate(R.layout.view_time_line, this, true)
 
         mHolderTopView = findViewById(R.id.handlerTop) as SeekBar
-        mVideoProgressIndicator = findViewById(R.id.timeVideoView) as ProgressBarView
-        mVideoProgressIndicator_top = findViewById(R.id.timeVideoView_top) as ProgressBarView
+        mVideoProgressIndicator_top = findViewById(R.id.timeVideoView_bottom) as ProgressBarView
+        mVideoProgressIndicator_bottom = findViewById(R.id.timeVideoView_top) as ProgressBarView
 
         mRangeSeekBarView = findViewById(R.id.timeLineBar) as RangeSeekBarView
         mLinearVideo = findViewById(R.id.layout_surface_view) as RelativeLayout
+
         mVideoView = findViewById(R.id.video_loader) as VideoView
         mPlayView = findViewById(R.id.icon_video_play) as ImageView
-        mTimeInfoContainer = findViewById(R.id.timeText)
-        mTextTimeFrame = findViewById(R.id.textTimeSelection) as TextView
-        mTextTime = findViewById(R.id.textTime) as TextView
+        mStartTime = findViewById(R.id.text_start_time) as TextView
+        mEndTime = findViewById(R.id.text_end_time) as TextView
+        mCurrentTime = findViewById(R.id.text_current_time) as TextView
         mTimeLineView = findViewById(R.id.timeLineView) as TimeLineView
+
+        layout_convert_right = findViewById(R.id.layout_convert_right) as RelativeLayout
+        layout_default_trim = findViewById(R.id.layout_trimmer) as RelativeLayout
+        img_convert_left = findViewById(R.id.img_convert_left) as ImageView
+        img_convert_right = findViewById(R.id.img_convert_right) as ImageView
+        text_convert_left = findViewById(R.id.text_convert_left) as TextView
+        text_convert_right = findViewById(R.id.text_convert_right) as TextView
+        text_video_name = findViewById(R.id.text_video_name) as TextView
+        radioGroup = findViewById(R.id.radioGroup) as RadioGroup
+        r_default = findViewById(R.id.radio_default) as RadioButton
+        r_video_only = findViewById(R.id.radio_video_only) as RadioButton
+        r_audio_only = findViewById(R.id.radio_audio_only) as RadioButton
+        seekbar_bar = findViewById(R.id.seekbar_bar) as View
+        layout_audio_setting = findViewById(R.id.layout_audio_setting) as FrameLayout
+        layout_video_setting = findViewById(R.id.layout_video_setting) as FrameLayout
 
         setUpListeners()
         setUpMargins()
+        setUpSpinners(context)
+
+        setUpRadioGroup()
     }
 
     private fun setUpListeners() {
@@ -94,8 +131,8 @@ class VideoTrimmer @JvmOverloads constructor(
                 updateVideoProgress(time)
             }
         })
-        mListeners!!.add(mVideoProgressIndicator!!)
         mListeners!!.add(mVideoProgressIndicator_top!!)
+        mListeners!!.add(mVideoProgressIndicator_bottom!!)
 
 
 //        findViewById(R.id.btCancel)
@@ -103,7 +140,35 @@ class VideoTrimmer @JvmOverloads constructor(
 //                OnClickListener { onCancelClicked() }
 //            )
 
+        layout_convert_right?.setOnClickListener {
+            if (whole_convert) {
+                img_convert_left?.setBackgroundResource(R.drawable.ic_convert_whole)
+                text_convert_left?.setText("구간선택 변환")
+                img_convert_right?.setBackgroundResource(R.drawable.ic_convert_section)
+                text_convert_right?.setText("전체 변환")
 
+            } else {
+                img_convert_left?.setBackgroundResource(R.drawable.ic_convert_whole)
+                text_convert_left?.setText("전체 변환")
+                img_convert_right?.setBackgroundResource(R.drawable.ic_convert_section)
+                text_convert_right?.setText("구간선택 변환")
+//                seekBarVideo!!.setProgress(0)
+//                    seekBarVideo!!.max = mTimeVideo * 1000
+//
+//                mRangeSeekBarView?.init()
+//                mDuration = 0
+//                setSeekBarPosition()
+//
+//                setTimeFrames()
+//                setTimeVideo(0)
+//                setPosVideo()
+            }
+            whole_convert = !whole_convert
+            mRangeSeekBarView!!.isVisible = !(mRangeSeekBarView!!.isVisible)
+            mVideoProgressIndicator_bottom!!.isVisible =
+                !(mVideoProgressIndicator_bottom!!.isVisible)
+            mVideoProgressIndicator_top!!.isVisible = !(mVideoProgressIndicator_top!!.isVisible)
+        }
         val gestureDetector = GestureDetector(
             context,
             object : GestureDetector.SimpleOnGestureListener() {
@@ -119,14 +184,13 @@ class VideoTrimmer @JvmOverloads constructor(
                 mOnTrimVideoListener!!.onError("Something went wrong reason : $what")
             false
         }
-
-        mVideoView!!.setOnTouchListener { v, event ->
+        mLinearVideo!!.setOnTouchListener { v, event ->
             gestureDetector.onTouchEvent(event)
             true
         }
 
-        mRangeSeekBarView!!.addOnRangeSeekBarListener(mVideoProgressIndicator!!)
         mRangeSeekBarView!!.addOnRangeSeekBarListener(mVideoProgressIndicator_top!!)
+        mRangeSeekBarView!!.addOnRangeSeekBarListener(mVideoProgressIndicator_bottom!!)
 
         mRangeSeekBarView!!.addOnRangeSeekBarListener(object : OnRangeSeekBarListener {
             override fun onCreate(rangeSeekBarView: RangeSeekBarView, index: Int, value: Float) {
@@ -145,6 +209,7 @@ class VideoTrimmer @JvmOverloads constructor(
                 onStopSeekThumbs()
             }
         })
+
 
         mHolderTopView!!.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -165,44 +230,38 @@ class VideoTrimmer @JvmOverloads constructor(
         mVideoView!!.setOnCompletionListener { onVideoCompleted() }
     }
 
+    fun getSeekbarPosition(): Int {
+        val padding = mHolderTopView!!.getPaddingLeft() + mHolderTopView!!.getPaddingRight()
+        val sPos = mHolderTopView!!.getLeft() + mHolderTopView!!.getPaddingLeft()
+        val xPos =
+            (mHolderTopView!!.getWidth() - padding) * mHolderTopView!!.getProgress() / mHolderTopView!!.getMax() + sPos - text_current_time!!.getWidth() / 2
+        return xPos
+    }
+
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private fun setUpMargins() {
-        val marge = mRangeSeekBarView!!.thumbs!!.get(0).widthBitmap
-//        val marge = 5
+        val marge = mRangeSeekBarView!!.thumbs!!.get(0).widthBitmap - 50
 
         val widthSeek = mHolderTopView!!.thumb.minimumWidth / 2
 
-//        var lp = mHolderTopView!!.layoutParams as RelativeLayout.LayoutParams
-//        lp.setMargins(marge - widthSeek, 0, marge - widthSeek, 0)
-//        mHolderTopView!!.layoutParams = lp
-//
-//        lp = mTimeLineView!!.getLayoutParams() as RelativeLayout.LayoutParams
-//        lp.setMargins(marge, 0, marge, 0)
-//        mTimeLineView!!.setLayoutParams(lp)
-//
-//        lp = mVideoProgressIndicator!!.getLayoutParams() as RelativeLayout.LayoutParams
-//        lp.setMargins(marge, 0, marge, 0)
-//        mVideoProgressIndicator!!.setLayoutParams(lp)
-//
-//        lp = mVideoProgressIndicator_top!!.getLayoutParams() as RelativeLayout.LayoutParams
-//        lp.setMargins(marge, 0, marge, 0)
-//        mVideoProgressIndicator_top!!.setLayoutParams(lp)
 
         var lp = mHolderTopView!!.layoutParams as FrameLayout.LayoutParams
-        lp.setMargins(marge - widthSeek-20, 170, marge - widthSeek, 0)
+        lp.setMargins(marge - widthSeek - 20, 170, marge - widthSeek, 0)
+
         mHolderTopView!!.layoutParams = lp
 
         lp = mTimeLineView!!.getLayoutParams() as FrameLayout.LayoutParams
         lp.setMargins(marge, 0, marge, 0)
         mTimeLineView!!.setLayoutParams(lp)
 
-        lp = mVideoProgressIndicator!!.getLayoutParams() as FrameLayout.LayoutParams
-        lp.setMargins(marge, 0, marge, 0)
-        mVideoProgressIndicator!!.setLayoutParams(lp)
-
         lp = mVideoProgressIndicator_top!!.getLayoutParams() as FrameLayout.LayoutParams
-        lp.setMargins(marge, 153, marge, 0)
+        lp.setMargins(marge, 0, marge, 0)
         mVideoProgressIndicator_top!!.setLayoutParams(lp)
+
+        lp = mVideoProgressIndicator_bottom!!.getLayoutParams() as FrameLayout.LayoutParams
+        lp.setMargins(marge, 153, marge, 0)
+        mVideoProgressIndicator_bottom!!.setLayoutParams(lp)
     }
 
     private fun onClickVideoPlayPause() {
@@ -243,6 +302,7 @@ class VideoTrimmer @JvmOverloads constructor(
                 duration = mEndPosition
             }
             setTimeVideo(duration)
+            setPosVideo()
         }
     }
 
@@ -262,6 +322,7 @@ class VideoTrimmer @JvmOverloads constructor(
         mVideoView!!.seekTo(duration)
         setTimeVideo(duration)
         notifyProgressUpdate(false)
+        setPosVideo()
     }
 
     private fun onVideoPrepared(@NonNull mp: MediaPlayer) {
@@ -289,6 +350,7 @@ class VideoTrimmer @JvmOverloads constructor(
 
         setTimeFrames()
         setTimeVideo(0)
+        setPosVideo()
 
         if (mOnVideoListener != null) {
             mOnVideoListener!!.onVideoPrepared()
@@ -316,20 +378,25 @@ class VideoTrimmer @JvmOverloads constructor(
     }
 
     private fun setTimeFrames() {
-        val seconds = context.getString(R.string.short_seconds)
-        mTextTimeFrame!!.text = String.format(
-            "%s %s - %s %s",
-            stringForTime(mStartPosition),
-            seconds,
-            stringForTime(mEndPosition),
-            seconds
-        )
+        mStartTime!!.text = stringForTime(mStartPosition)
+        mEndTime!!.text = stringForTime(mEndPosition)
+
+        mStartTime!!.text = stringForTime(mStartPosition)
+        setPosVideo()
+
     }
 
     private fun setTimeVideo(position: Int) {
-        val seconds = context.getString(R.string.short_seconds)
-        mTextTime!!.text = String.format("%s %s", stringForTime(position), seconds)
+        mCurrentTime!!.text = stringForTime(position)
+
     }
+
+    private fun setPosVideo() {
+        val xPos = getSeekbarPosition()
+        mCurrentTime!!.setX(xPos.toFloat())
+        seekbar_bar!!.setX(xPos.toFloat() + 44)
+    }
+
 
     private fun onSeekThumbs(index: Int, value: Float) {
         when (index) {
@@ -386,6 +453,7 @@ class VideoTrimmer @JvmOverloads constructor(
             setProgressBarPosition(time)
         }
         setTimeVideo(time)
+        setPosVideo()
     }
 
     private fun setProgressBarPosition(position: Int) {
@@ -393,10 +461,6 @@ class VideoTrimmer @JvmOverloads constructor(
             val pos = 1000L * position / mDuration
             mHolderTopView!!.progress = pos.toInt()
         }
-    }
-
-    fun setVideoInformationVisibility(visible: Boolean) {
-        mTimeInfoContainer!!.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
     fun setOnTrimVideoListener(onTrimVideoListener: OnTrimVideoListener) {
@@ -427,6 +491,71 @@ class VideoTrimmer @JvmOverloads constructor(
         mTimeLineView!!.setVideo(mSrc!!)
     }
 
+    fun setUpSpinners(context: Context) {
+        spinner_video_list = mutableListOf()
+        spinner_audio_list = mutableListOf()
+        for (i in 1..5) {
+            var spinner_id =
+                resources.getIdentifier("spinner_video_$i", "id", "com.fx.fxtrimmer")
+            spinner_video_list!!.add(findViewById(spinner_id))
+        }
+        for (i in 1..5) {
+            var spinner_array =
+                resources.getIdentifier("video_arr_$i", "array", "com.fx.fxtrimmer")
+            var m_adtType =
+                ArrayAdapter.createFromResource(context, spinner_array, R.layout.row_spinner)
+            m_adtType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner_video_list!![i - 1].adapter = m_adtType
+        }
+
+        for (i in 1..6) {
+            var spinner_id =
+                resources.getIdentifier("spinner_audio_$i", "id", "com.fx.fxtrimmer")
+            spinner_audio_list!!.add(findViewById(spinner_id))
+        }
+        for (i in 1..6) {
+            var spinner_array =
+                resources.getIdentifier("audio_arr_$i", "array", "com.fx.fxtrimmer")
+            var m_adtType =
+                ArrayAdapter.createFromResource(context, spinner_array, R.layout.row_spinner)
+            m_adtType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner_audio_list!![i - 1].adapter = m_adtType
+        }
+    }
+
+    fun setUpRadioGroup() {
+        var mRadioCheck: RadioGroup.OnCheckedChangeListener =
+            RadioGroup.OnCheckedChangeListener { group, checkedId ->
+                if (group.id == R.id.radioGroup) {
+                    when (checkedId) {
+                        R.id.radio_default -> {
+                            r_default?.setButtonDrawable(R.drawable.radiobtn_selected)
+                            r_video_only?.setButtonDrawable(R.drawable.radiobtn_unselected)
+                            r_audio_only?.setButtonDrawable(R.drawable.radiobtn_unselected)
+                            layout_video_setting!!.visibility = View.VISIBLE
+                            layout_audio_setting!!.visibility = View.VISIBLE
+
+                        }
+                        R.id.radio_video_only -> {
+                            r_default?.setButtonDrawable(R.drawable.radiobtn_unselected)
+                            r_video_only?.setButtonDrawable(R.drawable.radiobtn_selected)
+                            r_audio_only?.setButtonDrawable(R.drawable.radiobtn_unselected)
+                            layout_video_setting!!.visibility = View.VISIBLE
+                            layout_audio_setting!!.visibility = View.GONE
+                        }
+                        R.id.radio_audio_only -> {
+                            r_default?.setButtonDrawable(R.drawable.radiobtn_unselected)
+                            r_video_only?.setButtonDrawable(R.drawable.radiobtn_unselected)
+                            r_audio_only?.setButtonDrawable(R.drawable.radiobtn_selected)
+                            layout_video_setting!!.visibility = View.GONE
+                            layout_audio_setting!!.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            }
+        radioGroup!!.setOnCheckedChangeListener(mRadioCheck)
+    }
+
     private class MessageHandler internal constructor(view: VideoTrimmer) : Handler() {
 
         @NonNull
@@ -450,8 +579,6 @@ class VideoTrimmer @JvmOverloads constructor(
     }
 
     companion object {
-
-        private val TAG = VideoTrimmer::class.java.simpleName
         private val SHOW_PROGRESS = 2
     }
 }

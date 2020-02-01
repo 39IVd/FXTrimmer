@@ -49,8 +49,6 @@ object UiThreadExecutor {
                 val id = token.id
                 val old = TOKENS.remove(id)!!
                 if (old != token) {
-                    // a runnable finished after cancelling, we just removed a
-                    // wrong token, lets put it back
                     TOKENS[id] = old
                 }
             }

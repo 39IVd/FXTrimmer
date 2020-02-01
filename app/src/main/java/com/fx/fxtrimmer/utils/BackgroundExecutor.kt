@@ -18,14 +18,12 @@ object BackgroundExecutor {
     private fun directExecute(runnable: Runnable, delay: Long): Future<*>? {
         var future: Future<*>? = null
         if (delay > 0) {
-            /* no serial, but a delay: schedule the task */
             require(executor is ScheduledExecutorService) { "The executor set does not support scheduling" }
             future = executor.schedule(runnable, delay, TimeUnit.MILLISECONDS)
         } else {
             if (executor is ExecutorService) {
                 future = executor.submit(runnable)
             } else {
-                /* non-cancellable task */
                 executor.execute(runnable)
             }
         }
@@ -72,11 +70,6 @@ object BackgroundExecutor {
                 if (task.future != null) {
                     task!!.future!!.cancel(mayInterruptIfRunning)
                     if (!task.managed.getAndSet(true)) {
-                        /*
-                         * the task has been submitted to the executor, but its
-						 * execution has not started yet, so that its run()
-						 * method will never call postExecute()
-						 */
                         task.postExecute()
                     }
                 } else if (task.executionAsked) {
@@ -85,7 +78,6 @@ object BackgroundExecutor {
                         "A task with id " + task.id + " cannot be cancelled (the executor set does not support it)"
                     )
                 } else {
-                    /* this task has not been submitted to the executor */
                     TASKS.removeAt(i)
                 }
             }
@@ -96,7 +88,7 @@ object BackgroundExecutor {
 
          var id: String? = null
          var remainingDelay: Long = 0
-         var targetTimeMillis: Long = 0 /* since epoch */
+         var targetTimeMillis: Long = 0
          var serial: String? = null
          var executionAsked: Boolean = false
          var future: Future<*>? = null
@@ -118,7 +110,6 @@ object BackgroundExecutor {
 
         override fun run() {
             if (managed.getAndSet(true)) {
-                /* cancelled and postExecute() already called */
                 return
             }
 
@@ -126,7 +117,6 @@ object BackgroundExecutor {
                 CURRENT_SERIAL.set(serial)
                 execute()
             } finally {
-                /* handle next tasks */
                 postExecute()
             }
         }
@@ -135,12 +125,10 @@ object BackgroundExecutor {
 
          fun postExecute() {
             if (id == null && serial == null) {
-                /* nothing to do */
                 return
             }
             CURRENT_SERIAL.set(null)
             synchronized(BackgroundExecutor::class.java) {
-                /* execution complete */
                 TASKS.remove(this)
 
                 if (serial != null) {
@@ -151,7 +139,6 @@ object BackgroundExecutor {
                             next.remainingDelay =
                                 Math.max(0L, targetTimeMillis - System.currentTimeMillis())
                         }
-                        /* a task having the same serial was queued, execute it */
                         BackgroundExecutor.execute(next)
                     }
                 }

@@ -28,26 +28,16 @@ class VideoTrimmerActivity : AppCompatActivity(), OnTrimVideoListener, OnVideoLi
             maxDuration = extraIntent.getIntExtra(MainActivity.VIDEO_TOTAL_DURATION, 10)
         }
 
-        //setting progressbar
         mProgressDialog = ProgressDialog(this)
         mProgressDialog!!.setCancelable(false)
         mProgressDialog!!.setMessage(getString(R.string.trimming_progress))
 
         mVideoTrimmer = findViewById(R.id.timeLine) as VideoTrimmer
         if (mVideoTrimmer != null) {
-
-
-            /**
-             * get total duration of video file
-             */
-            Log.e("tg", "maxDuration = $maxDuration")
-            //mVideoTrimmer.setMaxDuration(maxDuration);
             mVideoTrimmer!!.setMaxDuration(maxDuration)
             mVideoTrimmer!!.setOnTrimVideoListener(this)
             mVideoTrimmer!!.setOnHgLVideoListener(this)
-            //mVideoTrimmer.setDestinationPath("/storage/emulated/0/DCIM/CameraCustom/");
             mVideoTrimmer!!.setVideoURI(Uri.parse(path))
-            mVideoTrimmer!!.setVideoInformationVisibility(true)
         }
     }
 

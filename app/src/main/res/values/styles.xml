@@ -10,5 +10,26 @@
         <item name="windowNoTitle">true</item>
         <!--        add-->
     </style>
-
+    <style name="CustomSpinner" parent="android:Widget.Spinner.DropDown">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:background">@drawable/shape_rectangle_spinner</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:radius">2dp</item>
+        <item name="android:textColor">@color/dull_teal</item>
+    </style>
+    <style name="CumtomSpinner_Text" parent="android:Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#4cffffff</item>
+        <item name="android:lineSpacingExtra">22sp</item>
+        <item name="android:background">@color/dark_grey</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+    </style>
 </resources>

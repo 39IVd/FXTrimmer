@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_trimmer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/dark_grey"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/layout_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@color/dark_grey">
+
+        <com.fx.fxtrimmer.view.TimeLineView
+            android:id="@+id/timeLineView"
+            android:layout_width="match_parent"
+            android:layout_height="58dp" />
+
+        <com.fx.fxtrimmer.view.ProgressBarView
+            android:id="@+id/timeVideoView_top"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="invisible"
+            />
+
+        <com.fx.fxtrimmer.view.ProgressBarView
+            android:id="@+id/timeVideoView_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="7dp"
+            android:visibility="invisible"
+            />
+
+        <View
+            android:id="@+id/seekbar_bar"
+            android:layout_width="1.7dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/white" />
+
+        <com.fx.fxtrimmer.view.RangeSeekBarView
+            android:id="@+id/timeLineBar"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:visibility="invisible" />
+
+        <SeekBar
+            android:id="@+id/handlerTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:max="1000"
+            android:progressDrawable="@android:color/transparent"
+            android:secondaryProgress="0"
+            android:thumb="@drawable/ic_seekbar_icon" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+            android:id="@+id/text_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0:00.0"
+            android:textColor="#8affffff"
+            android:textSize="12sp"></TextView>
+
+        <TextView
+            android:id="@+id/text_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="2:54.8"
+            android:textColor="#8affffff"
+            android:textSize="12sp"></TextView>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/text_current_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:text="0:00.0"
+        android:textColor="#8affffff"
+        android:textSize="12sp"></TextView>
+
+</RelativeLayout>

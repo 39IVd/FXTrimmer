@@ -18,14 +18,13 @@ class Thumb private constructor() {
             field = bitmap
             widthBitmap = bitmap!!.getWidth()
             heightBitmap = bitmap!!.getHeight()
-//            widthBitmap = 50
-//            heightBitmap = 100
         }
     var widthBitmap: Int = 0
         private set
     private var heightBitmap: Int = 0
 
     var mLastTouchX: Float = 0.toFloat()
+
     init {
         mVal = 0f
         mPos = 0f
@@ -51,6 +50,7 @@ class Thumb private constructor() {
     fun setPos(pos: Float) {
         mPos = pos
     }
+
     fun get_LastTouchX(): Float {
         return mLastTouchX
     }
@@ -72,8 +72,6 @@ class Thumb private constructor() {
             for (i in 0..1) {
                 val th = Thumb()
                 th.mIndex = i
-//                th.widthBitmap = 50
-//                th.heightBitmap = 100
                 if (i == 0) {
                     val resImageLeft = R.drawable.ic_trimmer_witbar_left
                     th.bitmap = BitmapFactory.decodeResource(resources, resImageLeft)

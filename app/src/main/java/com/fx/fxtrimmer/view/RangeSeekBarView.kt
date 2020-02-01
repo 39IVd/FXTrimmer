@@ -34,15 +34,13 @@ class RangeSeekBarView @JvmOverloads constructor(
     private var mFirstRun: Boolean = false
 
     private val mShadow = Paint()
-    private val mLine = Paint()
-
     private var currentThumb = 0
 
     init {
         init()
     }
 
-    private fun init() {
+    fun init() {
         thumbs = Thumb.initThumbs(resources)
         mThumbWidth = Thumb.getWidthBitmap(thumbs!!).toFloat()
         mThumbHeight = Thumb.getHeightBitmap(thumbs!!).toFloat()
@@ -60,10 +58,6 @@ class RangeSeekBarView @JvmOverloads constructor(
         mShadow.color = shadowColor
         mShadow.alpha = 177
 
-//        val lineColor = ContextCompat.getColor(context, R.color.line_color)
-//        mLine.isAntiAlias = true
-//        mLine.color = lineColor
-        // mLine.setAlpha(200);
     }
 
     fun initMaxWidth() {
@@ -98,7 +92,6 @@ class RangeSeekBarView @JvmOverloads constructor(
                 th.setVal(mScaleRangeMax * i)
                 th.setPos(mPixelRangeMax * i)
             }
-            // Fire listener callback
             onCreate(this, currentThumb, getThumbValue(currentThumb))
             mFirstRun = false
         }
@@ -119,7 +112,6 @@ class RangeSeekBarView @JvmOverloads constructor(
 
         when (action) {
             MotionEvent.ACTION_DOWN -> {
-                // Remember where we started
                 currentThumb = getClosestThumb(coordinate)
 
                 if (currentThumb == -1) {
@@ -155,12 +147,8 @@ class RangeSeekBarView @JvmOverloads constructor(
                     } else if (newX <= mPixelRangeMin) {
                         mThumb.setPos(mPixelRangeMin)
                     } else {
-                        //Check if thumb is not out of max width
                         checkPositionThumb(mThumb, mThumb2, dx, true)
-                        // Move the object
                         mThumb.setPos(mThumb.getPos() + dx)
-
-                        // Remember this touch position for the next move event
                         mThumb.set_LastTouchX(coordinate)
                     }
 
@@ -170,18 +158,14 @@ class RangeSeekBarView @JvmOverloads constructor(
                     } else if (newX >= mPixelRangeMax) {
                         mThumb.setPos(mPixelRangeMax)
                     } else {
-                        //Check if thumb is not out of max width
                         checkPositionThumb(mThumb2, mThumb, dx, false)
-                        // Move the object
                         mThumb.setPos(mThumb.getPos() + dx)
-                        // Remember this touch position for the next move event
                         mThumb.set_LastTouchX(coordinate)
                     }
                 }
 
                 setThumbPos(currentThumb, mThumb.getPos())
 
-                // Invalidate to request a redraw
                 invalidate()
                 return true
             }
@@ -251,14 +235,12 @@ class RangeSeekBarView @JvmOverloads constructor(
     fun setThumbValue(index: Int, value: Float) {
         thumbs!![index].setVal(value)
         calculateThumbPos(index)
-        // Tell the view we want a complete redraw
         invalidate()
     }
 
     private fun setThumbPos(index: Int, pos: Float) {
         thumbs!![index].setPos(pos)
         calculateThumbValue(index)
-        // Tell the view we want a complete redraw
         invalidate()
     }
 
@@ -266,7 +248,6 @@ class RangeSeekBarView @JvmOverloads constructor(
         var closest = -1
         if (!thumbs!!.isEmpty()) {
             for (i in thumbs!!.indices) {
-                // Find thumb closest to x coordinate
                 val tcoordinate = thumbs!![i].getPos() + mThumbWidth
                 if (coordinate >= thumbs!![i].getPos() && coordinate <= tcoordinate) {
                     closest = thumbs!![i].getIndex()
@@ -284,14 +265,24 @@ class RangeSeekBarView @JvmOverloads constructor(
                     val x = th.getPos() + paddingLeft
                     if (x > mPixelRangeMin) {
                         val mRect =
-                            Rect(mThumbWidth.toInt(), 0, (x + mThumbWidth).toInt(), mHeightTimeLine)
+                            Rect(
+                                mThumbWidth.toInt() - 50,
+                                0,
+                                (x + mThumbWidth).toInt() - 50,
+                                mHeightTimeLine
+                            )
                         canvas.drawRect(mRect, mShadow)
                     }
                 } else {
                     val x = th.getPos() - paddingRight
                     if (x < mPixelRangeMax) {
                         val mRect =
-                            Rect(x.toInt(), 0, (mViewWidth - mThumbWidth).toInt(), mHeightTimeLine)
+                            Rect(
+                                x.toInt() + 50,
+                                0,
+                                (mViewWidth - mThumbWidth).toInt() + 50,
+                                mHeightTimeLine
+                            )
                         canvas.drawRect(mRect, mShadow)
                     }
                 }
@@ -306,7 +297,7 @@ class RangeSeekBarView @JvmOverloads constructor(
                 if (th.getIndex() === 0) {
                     canvas.drawBitmap(
                         th.bitmap,
-                        th.getPos() + paddingLeft+40,
+                        th.getPos() + paddingLeft,
                         paddingTop.toFloat(),
                         Paint()
                     )
@@ -366,9 +357,5 @@ class RangeSeekBarView @JvmOverloads constructor(
             item.onSeekStop(rangeSeekBarView, index, value)
         }
     }
-
-
-
-
 
 }
