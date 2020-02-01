@@ -18,6 +18,8 @@ class Thumb private constructor() {
             field = bitmap
             widthBitmap = bitmap!!.getWidth()
             heightBitmap = bitmap!!.getHeight()
+//            widthBitmap = 50
+//            heightBitmap = 100
         }
     var widthBitmap: Int = 0
         private set
@@ -33,9 +35,6 @@ class Thumb private constructor() {
         return mIndex
     }
 
-    private fun setIndex(index: Int) {
-        mIndex = index
-    }
 
     fun getVal(): Float {
         return mVal
@@ -73,11 +72,13 @@ class Thumb private constructor() {
             for (i in 0..1) {
                 val th = Thumb()
                 th.mIndex = i
+//                th.widthBitmap = 50
+//                th.heightBitmap = 100
                 if (i == 0) {
-                    val resImageLeft = R.drawable.ic_trimmer_left
+                    val resImageLeft = R.drawable.ic_trimmer_witbar_left
                     th.bitmap = BitmapFactory.decodeResource(resources, resImageLeft)
                 } else {
-                    val resImageRight = R.drawable.ic_trimmer_right
+                    val resImageRight = R.drawable.ic_trimmer_witbar_left
                     th.bitmap = BitmapFactory.decodeResource(resources, resImageRight)
                 }
 

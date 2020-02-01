@@ -60,9 +60,9 @@ class RangeSeekBarView @JvmOverloads constructor(
         mShadow.color = shadowColor
         mShadow.alpha = 177
 
-        val lineColor = ContextCompat.getColor(context, R.color.line_color)
-        mLine.isAntiAlias = true
-        mLine.color = lineColor
+//        val lineColor = ContextCompat.getColor(context, R.color.line_color)
+//        mLine.isAntiAlias = true
+//        mLine.color = lineColor
         // mLine.setAlpha(200);
     }
 
@@ -306,15 +306,15 @@ class RangeSeekBarView @JvmOverloads constructor(
                 if (th.getIndex() === 0) {
                     canvas.drawBitmap(
                         th.bitmap,
-                        th.getPos() + paddingLeft,
-                        paddingTop + mHeightTimeLine.toFloat(),
+                        th.getPos() + paddingLeft+40,
+                        paddingTop.toFloat(),
                         Paint()
                     )
                 } else {
                     canvas.drawBitmap(
                         th.bitmap,
                         th.getPos() - paddingRight,
-                        paddingTop + mHeightTimeLine.toFloat(),
+                        paddingTop.toFloat(),
                         Paint()
                     )
                 }
@@ -366,6 +366,8 @@ class RangeSeekBarView @JvmOverloads constructor(
             item.onSeekStop(rangeSeekBarView, index, value)
         }
     }
+
+
 
 
 

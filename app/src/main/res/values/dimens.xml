@@ -1,8 +1,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">0dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="marginLayoutLR">15dp</dimen>
     <dimen name="textSize">15dp</dimen>
 
     <dimen name="btnWidth">200dp</dimen>
@@ -12,5 +11,8 @@
     <!-- VIDEO TRIMMER-->
     <dimen name="progress_video_line_height">2dp</dimen>
     <dimen name="frames_video_height">40dip</dimen>
+    <dimen name="trimmer_thumbs_topmargin">10dp</dimen>
+    <dimen name="trimmer_thumbs_width">32dp</dimen>
+    <dimen name="trimmer_thumbs_height">56dp</dimen>
 
 </resources>

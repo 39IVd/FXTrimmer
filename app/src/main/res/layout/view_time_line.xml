@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+    android:background="@color/dark_grey">
 
     <RelativeLayout
         android:id="@+id/layout_surface_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/layout"
+        android:layout_height="400dp"
         android:background="@android:color/black"
         android:gravity="center"
         android:orientation="vertical">
@@ -30,92 +30,147 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/layout"
+        android:layout_below="@id/layout_surface_view"
+        android:layout_marginTop="20dp"
+        android:background="@color/dark_grey"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/dark_grey">
+        android:layout_height="wrap_content">
+        <com.fx.fxtrimmer.view.TimeLineView
+            android:id="@+id/timeLineView"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"  />
+        <com.fx.fxtrimmer.view.ProgressBarView
+            android:id="@+id/timeVideoView_top"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.fx.fxtrimmer.view.ProgressBarView
+            android:id="@+id/timeVideoView"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="50dp"/>
+        <View
+            android:layout_width="1.7dp"
+            android:layout_height="60dp"
+            android:background="@color/white"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="5dp"/>
+        <com.fx.fxtrimmer.view.RangeSeekBarView
+            android:id="@+id/timeLineBar"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginEnd="15dp" />
 
         <SeekBar
             android:id="@+id/handlerTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
             android:max="1000"
             android:progressDrawable="@android:color/transparent"
             android:secondaryProgress="0"
-            android:thumb="@drawable/apptheme_text_select_handle_middle"/>
+            android:thumb="@drawable/ic_seekbar_icon"
+            android:layout_marginTop="60dp"/>
 
-        <com.fx.fxtrimmer.view.ProgressBarView
-            android:id="@+id/timeVideoView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/handlerTop"/>
+    </FrameLayout>
 
-        <com.fx.fxtrimmer.view.TimeLineView
-            android:id="@+id/timeLineView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/timeVideoView"/>
+    <!--    <RelativeLayout-->
+<!--        android:id="@+id/layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:layout_below="@id/layout_surface_view"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:background="@color/dark_grey">-->
 
-        <com.fx.fxtrimmer.view.RangeSeekBarView
-            android:id="@+id/timeLineBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-              android:layout_alignTop="@+id/timeLineView"/>
+<!--        <com.fx.fxtrimmer.view.ProgressBarView-->
+<!--            android:id="@+id/timeVideoView_top"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="5dp"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginRight="10dp" />-->
 
-        <View
-            android:id="@+id/lineTop"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/timeLineBar"
-            android:background="@color/line_color"/>
+<!--        <com.fx.fxtrimmer.view.TimeLineView-->
+<!--            android:id="@+id/timeLineView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="54dp"  />-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lineTop"
-            android:orientation="horizontal">
+<!--        <com.fx.fxtrimmer.view.RangeSeekBarView-->
+<!--            android:id="@+id/timeLineBar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="56dp"-->
+<!--            android:layout_marginEnd="15dp" />-->
 
-            <Button
-                android:id="@+id/btCancel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/cancel"
-                android:textColor="@android:color/white"/>
-        </LinearLayout>
+<!--        <com.fx.fxtrimmer.view.ProgressBarView-->
+<!--            android:id="@+id/timeVideoView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="5dp"-->
+<!--            android:layout_marginLeft="8dp"-->
+<!--            android:layout_marginRight="8dp" -->
+<!--            android:layout_below="@id/timeLineView"/>-->
 
-    </RelativeLayout>
+<!--        <SeekBar-->
+<!--            android:id="@+id/handlerTop"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/timeVideoView"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_marginRight="5dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:max="1000"-->
+<!--            android:progressDrawable="@android:color/transparent"-->
+<!--            android:secondaryProgress="0"-->
+<!--            android:thumb="@drawable/ic_seekbar_icon" />-->
+
+<!--    </RelativeLayout>-->
 
     <RelativeLayout
         android:id="@+id/timeText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/layout"
-        android:visibility="gone">
+        android:layout_height="50dp"
+        android:layout_below="@id/layout"
+        android:background="@color/dark_grey"
+        >
 
         <TextView
             android:id="@+id/textTimeSelection"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/textSize"
-            android:layout_toLeftOf="@+id/textTime"
-            android:layout_toRightOf="@+id/textSize"
-            android:layout_toStartOf="@+id/textTime"
-            android:gravity="center"
-            android:textColor="@android:color/white"/>
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:textColor="@android:color/white"
+            android:text="00:00-10:00"/>
 
         <TextView
             android:id="@+id/textTime"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:text="00:50"/>
 
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timeText"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
 
 
 </RelativeLayout>

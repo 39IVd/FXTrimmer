@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Handler
 import android.os.Message
 import android.util.AttributeSet
-import android.util.Log
 import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -26,7 +25,6 @@ import com.fx.fxtrimmer.view.ProgressBarView
 import com.fx.fxtrimmer.view.RangeSeekBarView
 import com.fx.fxtrimmer.view.Thumb
 import com.fx.fxtrimmer.view.TimeLineView
-import java.io.File
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -47,8 +45,10 @@ class VideoTrimmer @JvmOverloads constructor(
     private var mTimeLineView: TimeLineView? = null
 
     private var mVideoProgressIndicator: ProgressBarView? = null
+    private var mVideoProgressIndicator_top: ProgressBarView? = null
+
     private var mSrc: Uri? = null
-    private var mFinalPath: String? = null
+//    private var mFinalPath: String? = null
 
     private var mMaxDuration: Int = 0
     private var mListeners: MutableList<OnProgressVideoListener>? = null
@@ -60,7 +60,6 @@ class VideoTrimmer @JvmOverloads constructor(
     private var mStartPosition = 0
     private var mEndPosition = 0
 
-    private var mOriginSizeFile: Long = 0
     private var mResetSeekBar = true
     private val mMessageHandler = MessageHandler(this)
 
@@ -73,6 +72,8 @@ class VideoTrimmer @JvmOverloads constructor(
 
         mHolderTopView = findViewById(R.id.handlerTop) as SeekBar
         mVideoProgressIndicator = findViewById(R.id.timeVideoView) as ProgressBarView
+        mVideoProgressIndicator_top = findViewById(R.id.timeVideoView_top) as ProgressBarView
+
         mRangeSeekBarView = findViewById(R.id.timeLineBar) as RangeSeekBarView
         mLinearVideo = findViewById(R.id.layout_surface_view) as RelativeLayout
         mVideoView = findViewById(R.id.video_loader) as VideoView
@@ -94,6 +95,8 @@ class VideoTrimmer @JvmOverloads constructor(
             }
         })
         mListeners!!.add(mVideoProgressIndicator!!)
+        mListeners!!.add(mVideoProgressIndicator_top!!)
+
 
 //        findViewById(R.id.btCancel)
 //            .setOnClickListener(
@@ -123,6 +126,8 @@ class VideoTrimmer @JvmOverloads constructor(
         }
 
         mRangeSeekBarView!!.addOnRangeSeekBarListener(mVideoProgressIndicator!!)
+        mRangeSeekBarView!!.addOnRangeSeekBarListener(mVideoProgressIndicator_top!!)
+
         mRangeSeekBarView!!.addOnRangeSeekBarListener(object : OnRangeSeekBarListener {
             override fun onCreate(rangeSeekBarView: RangeSeekBarView, index: Int, value: Float) {
 
@@ -163,19 +168,41 @@ class VideoTrimmer @JvmOverloads constructor(
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private fun setUpMargins() {
         val marge = mRangeSeekBarView!!.thumbs!!.get(0).widthBitmap
+//        val marge = 5
+
         val widthSeek = mHolderTopView!!.thumb.minimumWidth / 2
 
-        var lp = mHolderTopView!!.layoutParams as RelativeLayout.LayoutParams
-        lp.setMargins(marge - widthSeek, 0, marge - widthSeek, 0)
+//        var lp = mHolderTopView!!.layoutParams as RelativeLayout.LayoutParams
+//        lp.setMargins(marge - widthSeek, 0, marge - widthSeek, 0)
+//        mHolderTopView!!.layoutParams = lp
+//
+//        lp = mTimeLineView!!.getLayoutParams() as RelativeLayout.LayoutParams
+//        lp.setMargins(marge, 0, marge, 0)
+//        mTimeLineView!!.setLayoutParams(lp)
+//
+//        lp = mVideoProgressIndicator!!.getLayoutParams() as RelativeLayout.LayoutParams
+//        lp.setMargins(marge, 0, marge, 0)
+//        mVideoProgressIndicator!!.setLayoutParams(lp)
+//
+//        lp = mVideoProgressIndicator_top!!.getLayoutParams() as RelativeLayout.LayoutParams
+//        lp.setMargins(marge, 0, marge, 0)
+//        mVideoProgressIndicator_top!!.setLayoutParams(lp)
+
+        var lp = mHolderTopView!!.layoutParams as FrameLayout.LayoutParams
+        lp.setMargins(marge - widthSeek-20, 170, marge - widthSeek, 0)
         mHolderTopView!!.layoutParams = lp
 
-        lp = mTimeLineView!!.getLayoutParams() as RelativeLayout.LayoutParams
+        lp = mTimeLineView!!.getLayoutParams() as FrameLayout.LayoutParams
         lp.setMargins(marge, 0, marge, 0)
         mTimeLineView!!.setLayoutParams(lp)
 
-        lp = mVideoProgressIndicator!!.getLayoutParams() as RelativeLayout.LayoutParams
+        lp = mVideoProgressIndicator!!.getLayoutParams() as FrameLayout.LayoutParams
         lp.setMargins(marge, 0, marge, 0)
         mVideoProgressIndicator!!.setLayoutParams(lp)
+
+        lp = mVideoProgressIndicator_top!!.getLayoutParams() as FrameLayout.LayoutParams
+        lp.setMargins(marge, 153, marge, 0)
+        mVideoProgressIndicator_top!!.setLayoutParams(lp)
     }
 
     private fun onClickVideoPlayPause() {
@@ -380,10 +407,6 @@ class VideoTrimmer @JvmOverloads constructor(
         mOnVideoListener = onHgLVideoListener
     }
 
-    fun setDestinationPath(finalPath: String) {
-        mFinalPath = finalPath
-        Log.d(TAG, "Setting custom path " + mFinalPath!!)
-    }
 
     fun destroy() {
         BackgroundExecutor.cancelAll("", true)
